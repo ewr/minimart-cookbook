@@ -1,0 +1,20 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[minimart::default]
+    attributes:
+      minimart:
+        user: root
+        pem: "/tmp/kitchen/client.pem"
+        client: "default-ubuntu-1204"
+        chef_server: "http://127.0.0.1:8889"

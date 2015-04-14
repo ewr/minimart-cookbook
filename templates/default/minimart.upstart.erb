@@ -1,0 +1,13 @@
+description "<%= @service %>"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+console log
+
+setuid <%= @resource.user %>
+
+exec <%= @resource.install_dir%>/minimart <%= @options.map { |k,v| "-#{k}='#{v}'" }.join(' ') %>
+
+respawn
+respawn limit 3 180
