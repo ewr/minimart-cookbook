@@ -1,3 +1,4 @@
+include Chef::DSL::IncludeRecipe
 use_inline_resources
 
 action :install do
@@ -33,11 +34,20 @@ action :install do
 
   slug  = [os,arch,new_resource.version].join("-")
 
-  remote_file "#{new_resource.install_dir}/minimart" do
-    source    "#{node.minimart.binary_url}/v#{new_resource.version}/minimart-#{slug}"
+  include_recipe "tarball"
+
+  tarball_x "#{new_resource.install_dir}/minimart.tgz" do
+    destination new_resource.install_dir
+    owner       new_resource.user
+    action      :nothing
+    notifies    :restart, "service[#{svc_name}]"
+  end
+
+  remote_file "#{new_resource.install_dir}/minimart.tgz" do
+    source    "#{node.minimart.binary_url}/v#{new_resource.version}/minimart-#{slug}.tar.gz"
     checksum  node.minimart.sha[slug]
     mode      0755
-    notifies  :restart, "service[#{svc_name}]"
+    notifies  :extract, "tarball_x[#{new_resource.install_dir}/minimart.tgz]"
   end
 
   options = {
