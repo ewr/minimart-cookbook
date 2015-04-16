@@ -1,8 +1,8 @@
 default.minimart.binary_url = "https://github.com/ewr/minimart/releases/download"
 
-default.minimart.version = "0.1.0"
+default.minimart.version = "0.1.1"
 default.minimart.sha = {
-  "linux-amd64-0.1.0" => "c4e4d5c0fc77309b572333835082841c50ab7d449cc6159a4ea16f925698d0b0"
+  "linux-amd64-0.1.1" => "c4e4d5c0fc77309b572333835082841c50ab7d449cc6159a4ea16f925698d0b0"
 }
 
 default.minimart.install_method = "binary"
